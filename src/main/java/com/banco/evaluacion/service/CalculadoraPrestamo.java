@@ -5,7 +5,6 @@
 
     //AQUI VIENE LA LOGICA QUE USAREMOS PARA EL CALCULO DE INTERESES SEGUN EL TIPO DE PRESTAMO
     public class CalculadoraPrestamo {
-
         private static final double interesHipotecario = 1.08;
         private static final double interesVehicular = 1.12;
         private static final double interesPersonal = 1.20;
