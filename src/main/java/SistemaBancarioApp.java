@@ -1,13 +1,14 @@
 import com.banco.evaluacion.exception.PreAprobacionException;
 import com.banco.evaluacion.model.Cliente;
 import com.banco.evaluacion.model.Prestamo;
+import com.banco.evaluacion.model.TipoPrestamo;
 import com.banco.evaluacion.service.CalculadoraPrestamo;
 
 public class SistemaBancarioApp {
     static void main() {
         //PRUEBA DE LOS RECORDS, TODOS LOS DATOS SON CORRECTOS Y SUPUESTAMENTE YA PASARON
         Cliente cliente = new Cliente("Luis",19,89,4000,false);
-        Prestamo prestamo = new Prestamo(5000, 6,"per");
+        Prestamo prestamo = new Prestamo(5000, 6,TipoPrestamo.PERSONAL);
         CalculadoraPrestamo calculadoraPrestamo = new CalculadoraPrestamo();
 
         System.out.println("\nCliente:");
