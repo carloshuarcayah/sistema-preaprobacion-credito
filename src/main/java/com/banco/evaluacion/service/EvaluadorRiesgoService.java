@@ -4,11 +4,11 @@ package com.banco.evaluacion.service;
 //PRESTAMO MINIMO DE 500 SOLES. (SI PIDE EN OTRA MONEDA QUE NO SEA SOLES IGUAL, DEBE SER MAYOR A 500 SOLES AL PASARLO)
 //NO DEBE TENER DEUDAS
 //EL PRESTAMO NO DEBERIA SUPERAR EL 30% DE SU SUELDO NETO
-
 //DE MOMENTO SOLO VALIDAREMOS EDAD, SCORE, SI TIENE DEUDA, Y QUE NO SUPERE 30% DE SU SUELDO
 
 import com.banco.evaluacion.exception.PreAprobacionException;
 import com.banco.evaluacion.model.Cliente;
+import com.banco.evaluacion.model.EstadoPrestamo;
 import com.banco.evaluacion.model.Prestamo;
 
 public class EvaluadorRiesgoService {
@@ -24,6 +24,9 @@ public class EvaluadorRiesgoService {
     }
 
     double validarPrestamo(Cliente cliente, Prestamo prestamo){
+        if(prestamo.estado()!=EstadoPrestamo.PENDIENTE){
+            throw new PreAprobacionException("Error estado: Solo se puede evaluar prestamos con estado PENDIENTE.");
+        }
 
         //TIENE QUE SER MAYOR DE EDAD Y NO TENER MAS DE 70
         if(cliente.edad()<EDAD_MINIMA||cliente.edad()>EDAD_MAXIMA){
