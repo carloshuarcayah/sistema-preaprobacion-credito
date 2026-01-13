@@ -1,10 +1,5 @@
 import com.banco.evaluacion.model.Cliente;
-import com.banco.evaluacion.model.EstadoPrestamo;
-import com.banco.evaluacion.model.Prestamo;
-import com.banco.evaluacion.model.TipoPrestamo;
 import com.banco.evaluacion.repository.ClienteRepository;
-import com.banco.evaluacion.service.BlocHistorialService;
-import com.banco.evaluacion.service.EvaluadorRiesgoService;
 
 import java.sql.SQLException;
 
