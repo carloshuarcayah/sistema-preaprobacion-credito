@@ -14,7 +14,7 @@ public class EvaluadorRiesgoTest {
     EvaluadorRiesgoService evaluadorRiesgoService;
     @BeforeEach
     void inicializar(){
-        evaluadorRiesgoService= new EvaluadorRiesgoService();
+        evaluadorRiesgoService= new EvaluadorRiesgoService(new BlocHistorialService());
     }
 
     //TESTS A PROBAR

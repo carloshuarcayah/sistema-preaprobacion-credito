@@ -1,5 +1,20 @@
-
-[13-01-2026 10:12:55] | Cliente: Juan | Tipo prestamo: PERSONAL | Monto solicitado: 5000.0| Estado: RECHAZADO | Mensaje: Error crediticio: La cuota mensual de S/.1000.0, es demasiado alta para un sueldo de s/.1200.0
-[13-01-2026 10:22:08] | Cliente: Juan | Tipo prestamo: PERSONAL | Monto solicitado: 5000.0| Estado: RECHAZADO | Mensaje: Error crediticio: La cuota mensual de S/.1000.0, es demasiado alta para un sueldo de s/.1200.0
-[13-01-2026 10:22:42] | Cliente: Mario | Tipo prestamo: PERSONAL | Monto solicitado: 5000.0| Estado: APROBADO | Mensaje: Prestamo aprobado.
-[13-01-2026 10:31:40] | Cliente: Mario | Tipo prestamo: PERSONAL | Monto solicitado: 5000.0| Estado: APROBADO | Mensaje: Prestamo Aprobado
+[13-01-2026 11:34:40] | Cliente: Lucia 1 | Tipo prestamo: VEHICULAR | Monto solicitado: 1996.59| Estado: RECHAZADO | Mensaje: Error deuda: El cliente tiene una deuda pendiente.
+[13-01-2026 11:34:40] | Cliente: Sofia 2 | Tipo prestamo: PERSONAL | Monto solicitado: 5570.22| Estado: APROBADO | Mensaje: Prestamo Aprobado
+[13-01-2026 11:34:40] | Cliente: Carlos 3 | Tipo prestamo: HIPOTECARIO | Monto solicitado: 2966.61| Estado: RECHAZADO | Mensaje: Error crediticio: El cliente no cumple con el score minimo.
+[13-01-2026 11:34:40] | Cliente: Ana 4 | Tipo prestamo: HIPOTECARIO | Monto solicitado: 12465.04| Estado: RECHAZADO | Mensaje: Error edad: El cliente no cumple con la edad permitida.
+[13-01-2026 11:34:40] | Cliente: Lucia 5 | Tipo prestamo: PERSONAL | Monto solicitado: 7802.04| Estado: RECHAZADO | Mensaje: Error deuda: El cliente tiene una deuda pendiente.
+[13-01-2026 11:34:40] | Cliente: Jose 6 | Tipo prestamo: VEHICULAR | Monto solicitado: 7846.69| Estado: RECHAZADO | Mensaje: Error deuda: El cliente tiene una deuda pendiente.
+[13-01-2026 11:34:40] | Cliente: Maria 7 | Tipo prestamo: PERSONAL | Monto solicitado: 12156.47| Estado: RECHAZADO | Mensaje: Error crediticio: El cliente no cumple con el score minimo.
+[13-01-2026 11:34:40] | Cliente: Jorge 8 | Tipo prestamo: HIPOTECARIO | Monto solicitado: 11635.3| Estado: RECHAZADO | Mensaje: Error deuda: El cliente tiene una deuda pendiente.
+[13-01-2026 11:34:40] | Cliente: Jose 9 | Tipo prestamo: HIPOTECARIO | Monto solicitado: 13921.35| Estado: RECHAZADO | Mensaje: Error edad: El cliente no cumple con la edad permitida.
+[13-01-2026 11:34:40] | Cliente: Elena 10 | Tipo prestamo: VEHICULAR | Monto solicitado: 542.07| Estado: RECHAZADO | Mensaje: Error deuda: El cliente tiene una deuda pendiente.
+[13-01-2026 11:34:40] | Cliente: Ana 11 | Tipo prestamo: PERSONAL | Monto solicitado: 12967.14| Estado: RECHAZADO | Mensaje: Error deuda: El cliente tiene una deuda pendiente.
+[13-01-2026 11:34:40] | Cliente: Jorge 12 | Tipo prestamo: HIPOTECARIO | Monto solicitado: 15050.02| Estado: RECHAZADO | Mensaje: Error crediticio: La cuota mensual de S/.903.0, es demasiado alta para un sueldo de s/.2936.66
+[13-01-2026 11:34:40] | Cliente: Pedro 13 | Tipo prestamo: HIPOTECARIO | Monto solicitado: 5233.62| Estado: RECHAZADO | Mensaje: Error crediticio: El cliente no cumple con el score minimo.
+[13-01-2026 11:34:40] | Cliente: Luis 14 | Tipo prestamo: HIPOTECARIO | Monto solicitado: 1711.72| Estado: RECHAZADO | Mensaje: Error deuda: El cliente tiene una deuda pendiente.
+[13-01-2026 11:34:40] | Cliente: Elena 15 | Tipo prestamo: HIPOTECARIO | Monto solicitado: 5291.86| Estado: APROBADO | Mensaje: Prestamo Aprobado
+[13-01-2026 11:34:40] | Cliente: Elena 16 | Tipo prestamo: VEHICULAR | Monto solicitado: 4401.39| Estado: APROBADO | Mensaje: Prestamo Aprobado
+[13-01-2026 11:34:40] | Cliente: Pedro 17 | Tipo prestamo: HIPOTECARIO | Monto solicitado: 13678.92| Estado: RECHAZADO | Mensaje: Error edad: El cliente no cumple con la edad permitida.
+[13-01-2026 11:34:40] | Cliente: Maria 18 | Tipo prestamo: VEHICULAR | Monto solicitado: 3536.82| Estado: RECHAZADO | Mensaje: Error crediticio: El cliente no cumple con el score minimo.
+[13-01-2026 11:34:40] | Cliente: Elena 19 | Tipo prestamo: PERSONAL | Monto solicitado: 10318.33| Estado: RECHAZADO | Mensaje: Error crediticio: El cliente no cumple con el score minimo.
+[13-01-2026 11:34:40] | Cliente: Luis 20 | Tipo prestamo: PERSONAL | Monto solicitado: 4059.38| Estado: RECHAZADO | Mensaje: Error deuda: El cliente tiene una deuda pendiente.

@@ -13,11 +13,15 @@ import com.banco.evaluacion.model.Prestamo;
 
 public class EvaluadorRiesgoService {
     private final CalculadoraPrestamo calculadoraPrestamo = new CalculadoraPrestamo();
-    private final BlocHistorialService blocHistorialService = new BlocHistorialService();
+    private final BlocHistorialService blocHistorialService;
     private final static double PRESTAMO_MINIMO = 500.0;
     private final static int EDAD_MINIMA = 18;
     private final static int EDAD_MAXIMA = 70;
     private final static int SCORE_MINIMO = 50;
+
+    public EvaluadorRiesgoService(BlocHistorialService b){
+        blocHistorialService=b;
+    }
 
     double validarPrestamo(Cliente cliente, Prestamo prestamo){
 
@@ -42,7 +46,7 @@ public class EvaluadorRiesgoService {
         }
 
         double limitePrestamo = cliente.sueldoNeto()*0.3;
-        double cuotaMensual = calculadoraPrestamo.calcularCuotaMensual(prestamo);
+        double cuotaMensual = Math.round(calculadoraPrestamo.calcularCuotaMensual(prestamo));
         boolean prestamoValido = cuotaMensual<limitePrestamo;
 
         //SI EL PRESTAMO SUPERA EL 30% DEL SUELDO NETO
