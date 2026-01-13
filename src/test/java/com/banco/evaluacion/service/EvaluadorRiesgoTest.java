@@ -3,6 +3,7 @@ package com.banco.evaluacion.service;
 import com.banco.evaluacion.exception.PreAprobacionException;
 import com.banco.evaluacion.model.Cliente;
 import com.banco.evaluacion.model.Prestamo;
+import com.banco.evaluacion.model.TipoPrestamo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -30,7 +31,7 @@ public class EvaluadorRiesgoTest {
     })
     void testValidarPorEdad(int edad, String estado){
         Cliente cliente = new Cliente("Luis",edad,90,3000,false);
-        Prestamo prestamo = new Prestamo(600,12,"HIPOTECARIO");
+        Prestamo prestamo = new Prestamo(600,12, TipoPrestamo.transformar("HIPOTECARIO"));
 
         switch (estado.toUpperCase().trim()){
             case "VALIDO"->{
