@@ -13,12 +13,13 @@ import com.banco.evaluacion.model.Prestamo;
 
 public class EvaluadorRiesgoService {
     private final CalculadoraPrestamo calculadoraPrestamo = new CalculadoraPrestamo();
+    private final BlocHistorialService blocHistorialService = new BlocHistorialService();
     private final static double PRESTAMO_MINIMO = 500.0;
     private final static int EDAD_MINIMA = 18;
     private final static int EDAD_MAXIMA = 70;
     private final static int SCORE_MINIMO = 50;
 
-    public void validarPrestamo(Cliente cliente, Prestamo prestamo){
+    public double validarPrestamo(Cliente cliente, Prestamo prestamo){
 
         //TIENE QUE SER MAYOR DE EDAD Y NO TENER MAS DE 70
         if(cliente.edad()<EDAD_MINIMA||cliente.edad()>EDAD_MAXIMA){
@@ -50,5 +51,29 @@ public class EvaluadorRiesgoService {
         }
 
         System.out.println("Validacion exitosa: ¡Su credito ha sido aprobado!");
+        return cuotaMensual;
+    }
+
+    public void evaluar(Cliente cliente, Prestamo prestamo){
+
+        System.out.println("\nCliente:");
+        System.out.println("Nombre: " + cliente.nombre());
+        System.out.println("Sueldo Neto: S/ " + cliente.sueldoNeto());
+        System.out.println("Historial Crediticio: " + cliente.historialCrediticio() + "/100");
+
+        System.out.println("\n--- Detalles prestamo ---");
+        System.out.println("Monto solicitado: S/ " + prestamo.monto());
+        System.out.println("Tipo: " + prestamo.tipoPrestamo());
+        System.out.println("Plazo: " + prestamo.plazoMeses() + " meses");
+
+        try{
+            double cuotaMensual =  validarPrestamo(cliente,prestamo);
+            System.out.println("\nCuota mensual: S/ " + String.format("%.2f", cuotaMensual));
+            blocHistorialService.actualizar(cliente,prestamo,true,"Prestamo Aprobado");
+        }
+        catch(PreAprobacionException e){
+            System.err.println(e.getMessage());
+            blocHistorialService.actualizar(cliente,prestamo,false,e.getMessage());
+        }
     }
 }

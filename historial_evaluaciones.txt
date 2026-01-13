@@ -1,2 +1,5 @@
 
 [13-01-2026 10:12:55] | Cliente: Juan | Tipo prestamo: PERSONAL | Monto solicitado: 5000.0| Estado: RECHAZADO | Mensaje: Error crediticio: La cuota mensual de S/.1000.0, es demasiado alta para un sueldo de s/.1200.0
+[13-01-2026 10:22:08] | Cliente: Juan | Tipo prestamo: PERSONAL | Monto solicitado: 5000.0| Estado: RECHAZADO | Mensaje: Error crediticio: La cuota mensual de S/.1000.0, es demasiado alta para un sueldo de s/.1200.0
+[13-01-2026 10:22:42] | Cliente: Mario | Tipo prestamo: PERSONAL | Monto solicitado: 5000.0| Estado: APROBADO | Mensaje: Prestamo aprobado.
+[13-01-2026 10:31:40] | Cliente: Mario | Tipo prestamo: PERSONAL | Monto solicitado: 5000.0| Estado: APROBADO | Mensaje: Prestamo Aprobado
