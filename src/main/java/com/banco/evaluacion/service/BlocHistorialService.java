@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 public class BlocHistorialService {
     private final static String RUTA_ARCHIVO="historial_evaluaciones.txt";
 
-    public void actualizar(Cliente cliente, Prestamo prestamo, boolean resultado, String mensaje){
+    void actualizar(Cliente cliente, Prestamo prestamo, boolean resultado, String mensaje){
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(RUTA_ARCHIVO,true))){
             String fecha = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
             String informacion = "["+fecha+"] | Cliente: "+cliente.nombre()+" | Tipo prestamo: "+prestamo.tipoPrestamo()+" | Monto solicitado: "+ prestamo.monto()+"| Estado: "+ (resultado?"APROBADO":"RECHAZADO")+" | Mensaje: "+mensaje;

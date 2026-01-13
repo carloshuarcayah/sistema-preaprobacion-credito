@@ -18,3 +18,4 @@
 [13-01-2026 11:34:40] | Cliente: Maria 18 | Tipo prestamo: VEHICULAR | Monto solicitado: 3536.82| Estado: RECHAZADO | Mensaje: Error crediticio: El cliente no cumple con el score minimo.
 [13-01-2026 11:34:40] | Cliente: Elena 19 | Tipo prestamo: PERSONAL | Monto solicitado: 10318.33| Estado: RECHAZADO | Mensaje: Error crediticio: El cliente no cumple con el score minimo.
 [13-01-2026 11:34:40] | Cliente: Luis 20 | Tipo prestamo: PERSONAL | Monto solicitado: 4059.38| Estado: RECHAZADO | Mensaje: Error deuda: El cliente tiene una deuda pendiente.
+[13-01-2026 11:40:26] | Cliente: Luis | Tipo prestamo: PERSONAL | Monto solicitado: 1000.0| Estado: APROBADO | Mensaje: Prestamo Aprobado
