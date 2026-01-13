@@ -7,15 +7,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class ClienteRepository {
     public int guardar(Cliente cliente) throws SQLException {
-        String sql = "INSERT INTO clientes (nombre,edad,sueldo) values (?,?,?) returning id";
+        String sql = "INSERT INTO clientes (nombre,edad,score_crediticio,sueldo,tiene_deuda) values (?,?,?,?,?) returning id";
 
         try(Connection conn = DataBaseConfig.getConnection();PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setString(1,cliente.nombre());
             pstmt.setInt(2,cliente.edad());
-            pstmt.setDouble(3,cliente.sueldoNeto());
+            pstmt.setInt(3,cliente.historialCrediticio());
+            pstmt.setDouble(4,cliente.sueldoNeto());
+            pstmt.setBoolean(5, cliente.tieneDeuda());
 
             try(ResultSet rs = pstmt.executeQuery()){
                 if(rs.next()){
@@ -27,5 +30,26 @@ public class ClienteRepository {
             throw new SQLException("No se pudo guardar al cliente");
         }
         throw new SQLException("No se pudo guardar al cliente");
+    }
+
+    public Optional<Cliente> buscarPorId(int id) throws SQLException {
+        String sql = "Select * from clientes where id=?";
+
+        try(Connection conn = DataBaseConfig.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1,id);
+            try(ResultSet rs = pstmt.executeQuery()){
+                if(rs.next()){
+                   Cliente cliente = new Cliente(
+                           rs.getString("nombre"),
+                           rs.getInt("edad"),
+                           rs.getInt("score_crediticio"),
+                           rs.getDouble("sueldo"),
+                           rs.getBoolean("tiene_deuda")
+                   );
+                   return Optional.of(cliente);
+                }
+            }
+        }
+        return Optional.empty();
     }
 }

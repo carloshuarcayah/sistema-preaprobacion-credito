@@ -1,3 +1,4 @@
+import com.banco.evaluacion.exception.PreAprobacionException;
 import com.banco.evaluacion.model.Cliente;
 import com.banco.evaluacion.repository.ClienteRepository;
 
@@ -5,14 +6,20 @@ import java.sql.SQLException;
 
 public class SistemaBancarioApp {
     static void main() {
-        Cliente diego = new Cliente("Diego", 30, 70,7500.0,false);
+        Cliente cliente = new Cliente("Mario", 30, 89,3500.0,false);
         ClienteRepository repo = new ClienteRepository();
 
         try {
-            int id = repo.guardar(diego);
-            System.out.println("Cliente guardado con ID: " + id);
+            int idGenerado = repo.guardar(cliente);
+            System.out.println("Cliente guardado con ID: " + idGenerado);
+            cliente = repo.buscarPorId(1).orElseThrow(()->new PreAprobacionException("error desconocido"));
+            System.out.println("Cliente encontrado: "+cliente);
+
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error de base de datos: " + e.getMessage());
+        }
+        catch(PreAprobacionException e){
+            System.err.println("Error de negocios: "+e.getMessage());
         }
     }
 }
