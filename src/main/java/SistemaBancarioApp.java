@@ -1,18 +1,23 @@
 import com.banco.evaluacion.model.Cliente;
+import com.banco.evaluacion.model.EstadoPrestamo;
 import com.banco.evaluacion.model.Prestamo;
 import com.banco.evaluacion.model.TipoPrestamo;
+import com.banco.evaluacion.repository.ClienteRepository;
 import com.banco.evaluacion.service.BlocHistorialService;
 import com.banco.evaluacion.service.EvaluadorRiesgoService;
 
+import java.sql.SQLException;
+
 public class SistemaBancarioApp {
     static void main() {
-        //PRUEBA DE LOS RECORDS, LOS DATOS SON EVALUADOS POR EL EVALUADOR DE RIESGO Y GUARDADOS EN UN ARCHIVO DE TEXTO
-        Cliente cliente = new Cliente("Luis",35,90,3500,false);
-        Prestamo prestamo = new Prestamo(1000,6,TipoPrestamo.PERSONAL,null);
-        BlocHistorialService historial = new BlocHistorialService();
-        EvaluadorRiesgoService evaluador = new EvaluadorRiesgoService(historial);
+        Cliente diego = new Cliente("Diego", 30, 70,7500.0,false);
+        ClienteRepository repo = new ClienteRepository();
 
-        evaluador.evaluar(cliente,prestamo);
-        historial.mostrarResumen();
+        try {
+            int id = repo.guardar(diego);
+            System.out.println("Cliente guardado con ID: " + id);
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
     }
 }
