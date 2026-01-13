@@ -19,7 +19,7 @@ public class EvaluadorRiesgoService {
     private final static int EDAD_MAXIMA = 70;
     private final static int SCORE_MINIMO = 50;
 
-    public double validarPrestamo(Cliente cliente, Prestamo prestamo){
+    double validarPrestamo(Cliente cliente, Prestamo prestamo){
 
         //TIENE QUE SER MAYOR DE EDAD Y NO TENER MAS DE 70
         if(cliente.edad()<EDAD_MINIMA||cliente.edad()>EDAD_MAXIMA){
