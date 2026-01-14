@@ -10,8 +10,8 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class ClienteRepository {
-    public int guardar(Cliente cliente) throws SQLException {
-        String sql = "INSERT INTO clientes (nombre,edad,score_crediticio,sueldo,tiene_deuda) values (?,?,?,?,?) returning id";
+    public void guardar(Cliente cliente) throws SQLException {
+        String sql = "INSERT INTO clientes (nombre,edad,score_crediticio,sueldo,tiene_deuda) values (?,?,?,?,?)";
 
         try(Connection conn = DataBaseConfig.getConnection();PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setString(1,cliente.nombre());
@@ -20,16 +20,11 @@ public class ClienteRepository {
             pstmt.setDouble(4,cliente.sueldoNeto());
             pstmt.setBoolean(5, cliente.tieneDeuda());
 
-            try(ResultSet rs = pstmt.executeQuery()){
-                if(rs.next()){
-                    return rs.getInt(1);
-                }
-            }
+            pstmt.executeQuery();
         }
         catch(SQLException e){
             throw new SQLException("No se pudo guardar al cliente");
         }
-        throw new SQLException("No se pudo guardar al cliente");
     }
 
     public Optional<Cliente> buscarPorId(int id) throws SQLException {
