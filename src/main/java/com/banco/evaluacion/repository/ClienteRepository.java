@@ -52,4 +52,14 @@ public class ClienteRepository {
         }
         return Optional.empty();
     }
+
+    public void eliminarClientePorId(int id) throws SQLException{
+        String sql = "UPDATE clientes SET activo = false WHERE id = ?";
+
+        try (Connection conn = DataBaseConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        }
+    }
 }
