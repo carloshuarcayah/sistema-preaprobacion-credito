@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class SistemaBancarioApp {
     static void main() {
-        Cliente cliente = new Cliente("Mario", 30, 89,3500.0,false);
+        Cliente cliente = new Cliente("Mario", 30, 89,3500.0,false,true);
         ClienteRepository repo = new ClienteRepository();
 
         try {
