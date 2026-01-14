@@ -20,3 +20,5 @@
 [13-01-2026 11:34:40] | Cliente: Luis 20 | Tipo prestamo: PERSONAL | Monto solicitado: 4059.38| Estado: RECHAZADO | Mensaje: Error deuda: El cliente tiene una deuda pendiente.
 [13-01-2026 11:40:26] | Cliente: Luis | Tipo prestamo: PERSONAL | Monto solicitado: 1000.0| Estado: APROBADO | Mensaje: Prestamo Aprobado
 [13-01-2026 14:14:11] | Cliente: Luis | Tipo prestamo: PERSONAL | Monto solicitado: 1000.0| Estado: APROBADO | Mensaje: Prestamo Aprobado
+[13-01-2026 21:03:31] | Cliente: Juan | Tipo prestamo: PERSONAL | Monto solicitado: 1000.0| Estado: APROBADO | Mensaje: Prestamo Aprobado
+[13-01-2026 21:06:50] | Cliente: Maria | Tipo prestamo: PERSONAL | Monto solicitado: 2000.0| Estado: APROBADO | Mensaje: Prestamo Aprobado
