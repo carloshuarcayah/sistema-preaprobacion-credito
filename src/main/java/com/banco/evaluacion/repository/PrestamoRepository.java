@@ -40,7 +40,6 @@ public class PrestamoRepository {
             pstmt.setString(1, estado.name());
             pstmt.setString(2,mensaje);
             pstmt.setInt(3,id);
-
             pstmt.executeUpdate();
         }
         catch(SQLException e){

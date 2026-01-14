@@ -4,6 +4,8 @@ import com.banco.evaluacion.exception.PreAprobacionException;
 import com.banco.evaluacion.model.Cliente;
 import com.banco.evaluacion.model.Prestamo;
 import com.banco.evaluacion.model.TipoPrestamo;
+import com.banco.evaluacion.repository.ClienteRepository;
+import com.banco.evaluacion.repository.PrestamoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -14,7 +16,7 @@ public class EvaluadorRiesgoTest {
     EvaluadorRiesgoService evaluadorRiesgoService;
     @BeforeEach
     void inicializar(){
-        evaluadorRiesgoService= new EvaluadorRiesgoService(new BlocHistorialService());
+        evaluadorRiesgoService= new EvaluadorRiesgoService(new BlocHistorialService(), new CalculadoraPrestamo(),new ClienteRepository(),new PrestamoRepository());
     }
 
     //TESTS A PROBAR

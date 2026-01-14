@@ -22,20 +22,23 @@ public class EvaluadorRiesgoService {
     private final static int EDAD_MAXIMA = 70;
     private final static int SCORE_MINIMO = 50;
 
-    private final CalculadoraPrestamo calculadoraPrestamo = new CalculadoraPrestamo();
+    private final CalculadoraPrestamo calculadoraPrestamo;
     private final BlocHistorialService blocHistorialService;
-    private final ClienteRepository clienteRepository = new ClienteRepository();
-    private final PrestamoRepository prestamoRepository = new PrestamoRepository();
+    private final ClienteRepository clienteRepository;
+    private final PrestamoRepository prestamoRepository;
 
-    public EvaluadorRiesgoService(BlocHistorialService b){
+    public EvaluadorRiesgoService(BlocHistorialService b, CalculadoraPrestamo calculadora, ClienteRepository repoCliente, PrestamoRepository repoPrestamo){
         blocHistorialService=b;
+        calculadoraPrestamo = calculadora;
+        clienteRepository= repoCliente;
+        prestamoRepository=repoPrestamo;
     }
 
     double validarPrestamo(Cliente cliente, Prestamo prestamo){
+
         if(!cliente.activo()){
             throw new PreAprobacionException("Error cliente: EL cliente no se ha encontrado o no esta habilitado.");
         }
-
         if(prestamo.estado()!=EstadoPrestamo.PENDIENTE){
             throw new PreAprobacionException("Error estado: Solo se puede evaluar prestamos con estado PENDIENTE.");
         }
@@ -60,33 +63,29 @@ public class EvaluadorRiesgoService {
             throw new PreAprobacionException("Error monto: El monto solicitado es menor al minimo permitido");
         }
 
-        double limitePrestamo = cliente.sueldoNeto()*0.3;
+        double limiteSueldo = cliente.sueldoNeto()*0.3;
         double cuotaMensual = Math.round(calculadoraPrestamo.calcularCuotaMensual(prestamo));
-        boolean prestamoValido = cuotaMensual<limitePrestamo;
 
         //SI EL PRESTAMO SUPERA EL 30% DEL SUELDO NETO
-        if(!prestamoValido){
+        if(cuotaMensual>limiteSueldo){
             throw new PreAprobacionException("Error crediticio: La cuota mensual de S/."+cuotaMensual+", es demasiado alta para un sueldo de s/."+cliente.sueldoNeto());
         }
-
         System.out.println("Validacion exitosa: ¡Su credito ha sido aprobado!");
+
         return cuotaMensual;
     }
 
+    private double obtenerCuota(Cliente cliente, Prestamo prestamo){
+        System.out.println("\nCLIENTE EVALUADO: "+cliente.nombre().toUpperCase());
+        System.out.println("Solicitud: "+prestamo.tipoPrestamo()+" | Monto: S/."+prestamo.monto());
+        System.out.println("-----------------------------------------");
+        return validarPrestamo(cliente,prestamo);
+    }
+
     public void evaluar(Cliente cliente, Prestamo prestamo){
-
-        System.out.println("\nCliente:");
-        System.out.println("Nombre: " + cliente.nombre());
-        System.out.println("Sueldo Neto: S/ " + cliente.sueldoNeto());
-        System.out.println("Historial Crediticio: " + cliente.historialCrediticio() + "/100");
-
-        System.out.println("\n--- Detalles prestamo ---");
-        System.out.println("Monto solicitado: S/ " + prestamo.monto());
-        System.out.println("Tipo: " + prestamo.tipoPrestamo());
-        System.out.println("Plazo: " + prestamo.plazoMeses() + " meses");
-
         try{
-            double cuotaMensual =  validarPrestamo(cliente,prestamo);
+            double cuotaMensual = obtenerCuota(cliente,prestamo);
+            System.out.println("Prestamo APROBADO...");
             System.out.println("\nCuota mensual: S/ " + String.format("%.2f", cuotaMensual));
             blocHistorialService.actualizar(cliente,prestamo,true,"Prestamo Aprobado");
         }
@@ -95,40 +94,40 @@ public class EvaluadorRiesgoService {
             blocHistorialService.actualizar(cliente,prestamo,false,e.getMessage());
         }
     }
+
     public void evaluarPostgres(Cliente cliente, Prestamo prestamo) throws SQLException {
-
-        System.out.println("\nCliente:");
-        System.out.println("Nombre: " + cliente.nombre());
-        System.out.println("Sueldo Neto: S/ " + cliente.sueldoNeto());
-        System.out.println("Historial Crediticio: " + cliente.historialCrediticio() + "/100");
-
-        System.out.println("\n--- Detalles prestamo ---");
-        System.out.println("Monto solicitado: S/ " + prestamo.monto());
-        System.out.println("Tipo: " + prestamo.tipoPrestamo());
-        System.out.println("Plazo: " + prestamo.plazoMeses() + " meses");
-
         try{
-            double cuotaMensual =  validarPrestamo(cliente,prestamo);
+            double cuotaMensual =  obtenerCuota(cliente,prestamo);
             System.out.println("\nCuota mensual: S/ " + String.format("%.2f", cuotaMensual));
             prestamoRepository.actualizarEstado(prestamo.id(), EstadoPrestamo.APROBADO,"El prestamo fue aprobado");
         }
         catch(PreAprobacionException e){
-            System.err.println(e.getMessage());
-            prestamoRepository.actualizarEstado(prestamo.id(),EstadoPrestamo.RECHAZADO,"El prestamo fue RECHAZADO");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.err.println("Prestamo RECHAZADO: "+ e.getMessage());
+            prestamoRepository.actualizarEstado(prestamo.id(),EstadoPrestamo.RECHAZADO,e.getMessage());
         }
     }
     public void revisarPendientes() throws SQLException {
-        try {
-            List<Prestamo> prestamosPendientes = prestamoRepository.obtenerPendientes().orElseThrow();
-            for(Prestamo prestamo: prestamosPendientes){
-                Cliente cliente = (clienteRepository.buscarPorId(prestamo.cliente_id()).orElseThrow());
-                evaluarPostgres(cliente,prestamo);
+            List<Prestamo> pendientes = prestamoRepository.obtenerPendientes().orElse(List.of());
+
+            if(pendientes.isEmpty()){
+                System.out.println("No hay prestamos que necesiten ser revisados.");
+                return;
             }
 
-        }catch (SQLException e){
-            throw new SQLException("No se pudo obtener informacion de historial_prestamos: "+e.getMessage());
-        }
+            for(Prestamo prestamo: pendientes){
+                try {
+                    Cliente cliente = (clienteRepository.buscarPorId(prestamo.cliente_id())
+                            .orElseThrow(
+                                    () -> new PreAprobacionException("Cliente ID: " + prestamo.cliente_id() + " no encontrado")
+                            )
+                    );
+                    evaluarPostgres(cliente, prestamo);
+                }catch(PreAprobacionException e){
+                    System.err.println("Error prestamo"+prestamo.id()+": "+e.getMessage());
+                } catch (Exception e) {
+                    System.err.println("Fallo inesperado en prestamo "+prestamo.id()+": "+e.getMessage());
+                }
+
+            }
     }
 }

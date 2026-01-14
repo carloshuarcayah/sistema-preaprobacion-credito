@@ -6,17 +6,18 @@ import com.banco.evaluacion.model.TipoPrestamo;
 import com.banco.evaluacion.repository.ClienteRepository;
 import com.banco.evaluacion.repository.PrestamoRepository;
 import com.banco.evaluacion.service.BlocHistorialService;
+import com.banco.evaluacion.service.CalculadoraPrestamo;
 import com.banco.evaluacion.service.EvaluadorRiesgoService;
 
 import java.sql.SQLException;
 
 public class SistemaBancarioApp {
     static void main() {
-//        Cliente cliente = new Cliente("Luisa", 20, 89,8500.0,false,true);
-//        Prestamo prestamo = new Prestamo(2000,12, TipoPrestamo.PERSONAL, EstadoPrestamo.PENDIENTE);
-        EvaluadorRiesgoService evaluadorRiesgoService = new EvaluadorRiesgoService(new BlocHistorialService());
-//        ClienteRepository repo = new ClienteRepository();
-//        PrestamoRepository prestamoRepository = new PrestamoRepository();
+        BlocHistorialService blocService = new BlocHistorialService();
+        ClienteRepository repoCliente = new ClienteRepository();
+        PrestamoRepository repoPrestamo = new PrestamoRepository();
+        CalculadoraPrestamo calculadoraPrestamo = new CalculadoraPrestamo();
+        EvaluadorRiesgoService evaluadorRiesgoService = new EvaluadorRiesgoService(blocService,calculadoraPrestamo,repoCliente,repoPrestamo);
         try {
 //            evaluadorRiesgoService.evaluar(cliente,prestamo);
 //
