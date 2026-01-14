@@ -33,7 +33,7 @@ public class ClienteRepository {
     }
 
     public Optional<Cliente> buscarPorId(int id) throws SQLException {
-        String sql = "Select * from clientes where id=?";
+        String sql = "Select * from clientes where id=? and activo=true";
 
         try(Connection conn = DataBaseConfig.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setInt(1,id);
@@ -44,7 +44,8 @@ public class ClienteRepository {
                            rs.getInt("edad"),
                            rs.getInt("score_crediticio"),
                            rs.getDouble("sueldo"),
-                           rs.getBoolean("tiene_deuda")
+                           rs.getBoolean("tiene_deuda"),
+                           rs.getBoolean("activo")
                    );
                    return Optional.of(cliente);
                 }

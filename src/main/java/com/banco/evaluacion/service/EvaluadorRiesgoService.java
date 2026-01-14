@@ -24,6 +24,10 @@ public class EvaluadorRiesgoService {
     }
 
     double validarPrestamo(Cliente cliente, Prestamo prestamo){
+        if(!cliente.activo()){
+            throw new PreAprobacionException("Error cliente: EL cliente no se ha encontrado o no esta habilitado.");
+        }
+
         if(prestamo.estado()!=EstadoPrestamo.PENDIENTE){
             throw new PreAprobacionException("Error estado: Solo se puede evaluar prestamos con estado PENDIENTE.");
         }

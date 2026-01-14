@@ -30,7 +30,7 @@ public class EvaluadorRiesgoTest {
             "75, INVALIDO",
     })
     void testValidarPorEdad(int edad, String estado){
-        Cliente cliente = new Cliente("Luis",edad,90,3000,false);
+        Cliente cliente = new Cliente("Luis",edad,90,3000,false,true);
         Prestamo prestamo = new Prestamo(600,12, TipoPrestamo.transformar("HIPOTECARIO"),null);
 
         switch (estado.toUpperCase().trim()){
