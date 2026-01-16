@@ -1,8 +1,3 @@
-import com.banco.evaluacion.exception.PreAprobacionException;
-import com.banco.evaluacion.model.Cliente;
-import com.banco.evaluacion.model.EstadoPrestamo;
-import com.banco.evaluacion.model.Prestamo;
-import com.banco.evaluacion.model.TipoPrestamo;
 import com.banco.evaluacion.repository.ClienteRepository;
 import com.banco.evaluacion.repository.PrestamoRepository;
 import com.banco.evaluacion.service.BlocHistorialService;
@@ -13,25 +8,23 @@ import java.sql.SQLException;
 
 public class SistemaBancarioApp {
     static void main() {
-        BlocHistorialService blocService = new BlocHistorialService();
+
+        BlocHistorialService blocService = new BlocHistorialService(); // guarda la informacion los prestamos aprobados o rechazados
         ClienteRepository repoCliente = new ClienteRepository();
         PrestamoRepository repoPrestamo = new PrestamoRepository();
-        CalculadoraPrestamo calculadoraPrestamo = new CalculadoraPrestamo();
+        CalculadoraPrestamo calculadoraPrestamo = new CalculadoraPrestamo(); //hace el calculo de las prestamos
         EvaluadorRiesgoService evaluadorRiesgoService = new EvaluadorRiesgoService(blocService,calculadoraPrestamo,repoCliente,repoPrestamo);
+
+        System.out.println("INICIANDO REVISION DE PRESTAMOS");
         try {
-//            evaluadorRiesgoService.evaluar(cliente,prestamo);
-//
-//            int idGenerado = repo.guardar(cliente);
-//            System.out.println("Cliente guardado con ID: " + idGenerado);
-//            System.out.println("Cliente encontrado: "+cliente);
-//          repo.eliminarClientePorId(4);
-//            prestamoRepository.guardar(prestamo,idGenerado,"Prestamo ha sido aprobado");
+            System.out.println("revisando...");
             evaluadorRiesgoService.revisarPendientes();
+            System.out.println("REVISION TERMINADA");
         } catch (SQLException e) {
-            System.err.println("Error de base de datos: " + e.getMessage());
+            System.err.println("Error de conexion a la base de datos: " + e.getMessage());
         }
-        catch(PreAprobacionException e){
-            System.err.println("Error de negocios: "+e.getMessage());
+        catch(Exception e){
+            System.err.println("Error inesperado: "+e.getMessage());
         }
     }
 }

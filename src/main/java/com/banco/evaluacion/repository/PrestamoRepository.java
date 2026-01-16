@@ -55,19 +55,19 @@ public class PrestamoRepository {
             while(rs.next()){
                 prestamos.add(
                         new Prestamo(
-                                rs.getInt(1),
-                                rs.getInt(2),
-                                rs.getDouble(4),
-                                rs.getInt(8),
-                                TipoPrestamo.valueOf(rs.getString(3)),
-                                EstadoPrestamo.valueOf(rs.getString(5))
+                                rs.getInt("id"),
+                                rs.getInt("cliente_id"),
+                                rs.getDouble("monto_solicitado"),
+                                rs.getInt("plazo_meses"),
+                                TipoPrestamo.valueOf(rs.getString("tipo_prestamo")),
+                                EstadoPrestamo.valueOf(rs.getString("estado"))
                 ));
             }
             if(!prestamos.isEmpty())
             return Optional.of(prestamos);
             else return Optional.empty();
         }catch(SQLException e){
-            throw new SQLException("No se pudo conectar con la tabla historial_prestamo");
+            throw new SQLException("No se pudo conectar con la tabla historial_prestamos:"+e.getMessage());
         }
 
     }
