@@ -1,8 +1,10 @@
 package com.banco.evaluacion.service;
 
 import com.banco.evaluacion.exception.PreAprobacionException;
+import com.banco.evaluacion.model.EstadoPrestamo;
 import com.banco.evaluacion.model.Prestamo;
 import com.banco.evaluacion.model.TipoPrestamo;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -11,28 +13,15 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CalculadoraPrestamoTest {
     //UNA PRUEBA POSITIVA UNA PRUEBA NEGATIVA
     @ParameterizedTest
+    @DisplayName("Los calculos de los prestamos son correctos, la logica siempre va a ser valida")
     @CsvSource({
-            "vehicular,valido",
-            "hipotecario,valido",
-            "personal,valido",
-            "operacion,invalido",
-            "vacaciones,invalido"
+            "PERSONAL,1000,10000",//EL RESULTADO DE ESTA OPERACION NOS DEBERIA DE DAR 1000, VAMOS SACAAR UN PRESTAMO DE 10000 QUE SERIA UN PAGO DE 12000 PORQUE ES UN PRESTAMO PERSONAL EN 12 MESES LO CUAL NUESTRO CUOTA SERIA DE 1000
+            "VEHICULAR, 933.33,10000",
+            "HIPOTECARIO,504,5600"
     })
-    void testTipoPrestamoValidacion(String tipo, String estado) {
-        switch (estado){
-            case "VALIDO"->{
-                assertDoesNotThrow(()->{
-                            TipoPrestamo.transformar(tipo);
-
-                        }, "Se esperaba que "+tipo+" sea valido."
-                );
-            }
-            case "INVALIDO"->{
-                assertThrows(PreAprobacionException.class,()->{
-                    TipoPrestamo.transformar(tipo);
-                },"Se esperaba un error para: "+tipo);
-            }
-        }
-
+    void testsPrestamoExactoValido(String tipo, double esperado, double monto) {
+        CalculadoraPrestamo calculadora = new CalculadoraPrestamo();
+        Prestamo prestamo = new Prestamo(1,1,monto,12,TipoPrestamo.valueOf(tipo), EstadoPrestamo.PENDIENTE);
+        assertEquals(esperado,calculadora.calcularCuotaMensual(prestamo),0.01,"Se esperaba que la calculadora diera un calculo perfecto.");
     }
 }
