@@ -7,7 +7,7 @@
     public class CalculadoraPrestamo {
         public double calcularCuotaMensual(Prestamo prestamo){
             if(prestamo==null) throw new PreAprobacionException("Error de dato: Objeto invalido o null");
-            if(prestamo.monto()<0) throw new PreAprobacionException("Error al calcular: Se ha introducido un monto invalido");
+            if(prestamo.monto()<=0) throw new PreAprobacionException("Error al calcular: Se ha introducido un monto invalido");
 
             double interes = prestamo.tipoPrestamo().getInteres();
             return (interes* prestamo.monto())/ prestamo.plazoMeses();
