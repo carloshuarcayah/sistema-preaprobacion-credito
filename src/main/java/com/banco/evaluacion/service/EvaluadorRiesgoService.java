@@ -7,11 +7,12 @@ import com.banco.evaluacion.model.Prestamo;
 import com.banco.evaluacion.repository.ClienteRepository;
 import com.banco.evaluacion.repository.PrestamoRepository;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
 public class EvaluadorRiesgoService {
-    private final static double PRESTAMO_MINIMO = 500.0;
+    private final static BigDecimal PRESTAMO_MINIMO = BigDecimal.valueOf(500.0);
     private final static int EDAD_MINIMA = 18;
     private final static int EDAD_MAXIMA = 70;
     private final static int SCORE_MINIMO = 50;
@@ -28,7 +29,7 @@ public class EvaluadorRiesgoService {
         prestamoRepository=repoPrestamo;
     }
 
-    double validarPrestamo(Cliente cliente, Prestamo prestamo){
+    BigDecimal validarPrestamo(Cliente cliente, Prestamo prestamo){
 
         if(!cliente.activo()){
             throw new PreAprobacionException("Error cliente: EL cliente no se ha encontrado o no esta habilitado.");
@@ -53,15 +54,15 @@ public class EvaluadorRiesgoService {
         }
 
         //PRESTAMO MENOR AL MINIMO
-        if(prestamo.monto()<PRESTAMO_MINIMO){
+        if(prestamo.monto().compareTo(PRESTAMO_MINIMO)<0){
             throw new PreAprobacionException("Error monto: El monto solicitado es menor al minimo permitido");
         }
 
-        double limiteSueldo = cliente.sueldoNeto()*0.3;
-        double cuotaMensual = Math.round(calculadoraPrestamo.calcularCuotaMensual(prestamo));
+        BigDecimal limiteSueldo = BigDecimal.valueOf(cliente.sueldoNeto()*0.3);
+        BigDecimal cuotaMensual = calculadoraPrestamo.calcularCuotaMensual(prestamo);
 
         //SI EL PRESTAMO SUPERA EL 30% DEL SUELDO NETO
-        if(cuotaMensual>limiteSueldo){
+        if(limiteSueldo.compareTo(cuotaMensual)<0){
             throw new PreAprobacionException("Error crediticio: La cuota mensual de S/."+cuotaMensual+", es demasiado alta para un sueldo de s/."+cliente.sueldoNeto());
         }
         System.out.println("Validacion exitosa: ¡Su credito ha sido aprobado!");
@@ -69,7 +70,7 @@ public class EvaluadorRiesgoService {
         return cuotaMensual;
     }
 
-    private double obtenerCuota(Cliente cliente, Prestamo prestamo){
+    private BigDecimal obtenerCuota(Cliente cliente, Prestamo prestamo){
         System.out.println("\nCLIENTE EVALUADO: "+cliente.nombre().toUpperCase());
         System.out.println("Solicitud: "+prestamo.tipoPrestamo()+" | Monto: S/."+prestamo.monto());
         System.out.println("-----------------------------------------");
@@ -78,7 +79,7 @@ public class EvaluadorRiesgoService {
 
     public void evaluar(Cliente cliente, Prestamo prestamo){
         try{
-            double cuotaMensual = obtenerCuota(cliente,prestamo);
+            BigDecimal cuotaMensual = obtenerCuota(cliente,prestamo);
             System.out.println("Prestamo APROBADO...");
             System.out.println("\nCuota mensual: S/ " + String.format("%.2f", cuotaMensual));
             blocHistorialService.actualizar(cliente,prestamo,true,"Prestamo Aprobado");
@@ -91,7 +92,7 @@ public class EvaluadorRiesgoService {
 
     public void evaluarPostgres(Cliente cliente, Prestamo prestamo) throws SQLException {
         try{
-            double cuotaMensual =  obtenerCuota(cliente,prestamo);
+            BigDecimal cuotaMensual =  obtenerCuota(cliente,prestamo);
             System.out.println("\nCuota mensual: S/ " + String.format("%.2f", cuotaMensual));
             prestamoRepository.actualizarEstado(prestamo.id(), EstadoPrestamo.APROBADO,"El prestamo fue aprobado");
         }

@@ -10,6 +10,9 @@ import org.junit.jupiter.params.Parameter;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CalculadoraPrestamoTest {
@@ -21,10 +24,10 @@ public class CalculadoraPrestamoTest {
             "VEHICULAR, 933.33,10000",
             "HIPOTECARIO,504,5600"
     })
-    void testsPrestamoExactoValido(String tipo, double esperado, double monto) {
+    void testsPrestamoExactoValido(String tipo, BigDecimal esperado, BigDecimal monto) {
         CalculadoraPrestamo calculadora = new CalculadoraPrestamo();
         Prestamo prestamo = new Prestamo(1,1,monto,12,TipoPrestamo.valueOf(tipo), EstadoPrestamo.PENDIENTE);
-        assertEquals(esperado,calculadora.calcularCuotaMensual(prestamo),0.01,"Se esperaba que la calculadora diera un calculo perfecto.");
+        assertEquals(0, esperado.compareTo(calculadora.calcularCuotaMensual(prestamo)), "Se esperaba que la calculadora diera un calculo perfecto.");
     }
 
     @ParameterizedTest
@@ -32,7 +35,7 @@ public class CalculadoraPrestamoTest {
     @ValueSource(doubles = {-5000,-100, 0})
     void testMontoInvalido(double monto){
         CalculadoraPrestamo calculadora = new CalculadoraPrestamo();
-        Prestamo prestamo = new Prestamo(1,1,monto,12,TipoPrestamo.PERSONAL, EstadoPrestamo.PENDIENTE);
+        Prestamo prestamo = new Prestamo(1,1,BigDecimal.valueOf(monto),12,TipoPrestamo.PERSONAL, EstadoPrestamo.PENDIENTE);
         assertThrows(PreAprobacionException.class,()->{calculadora.calcularCuotaMensual(prestamo);},"Se esperaba una excepcion por monto invalido");
     }
 }

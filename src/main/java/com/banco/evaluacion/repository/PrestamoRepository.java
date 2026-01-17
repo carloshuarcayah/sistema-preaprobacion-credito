@@ -22,7 +22,7 @@ public class PrestamoRepository {
         try(Connection conn = DataBaseConfig.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setInt(1,id_cliente);
             pstmt.setString(2,prestamo.tipoPrestamo().name());
-            pstmt.setDouble(3,prestamo.monto());
+            pstmt.setBigDecimal(3,prestamo.monto());
             pstmt.setInt(4,prestamo.plazoMeses());
             pstmt.setString(5,prestamo.estado().name());
             pstmt.setString(6,mensaje);
@@ -57,7 +57,7 @@ public class PrestamoRepository {
                         new Prestamo(
                                 rs.getInt("id"),
                                 rs.getInt("cliente_id"),
-                                rs.getDouble("monto_solicitado"),
+                                rs.getBigDecimal("monto_solicitado"),
                                 rs.getInt("plazo_meses"),
                                 TipoPrestamo.valueOf(rs.getString("tipo_prestamo")),
                                 EstadoPrestamo.valueOf(rs.getString("estado"))
