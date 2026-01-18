@@ -3,7 +3,7 @@
 Este proyecto es un sistema automatizado de evaluación crediticia desarrollado en **Java 17**. El motor evalúa solicitudes enviadas y, basándose en reglas de negocio estrictas, valida si el crédito es aprobado o rechazado, calculando además la cuota mensual precisa.
 
 ## Tecnologías
-- **Lenguaje:** Java 17 (Uso de Records, Switch Expressions).
+- **Lenguaje:** Java 21 (Uso de Records, Switch Expressions).
 - **Gestión de dependencias:** Maven.
 - **Testing:** JUnit 5.
 - **Conexión:** JDBC.
