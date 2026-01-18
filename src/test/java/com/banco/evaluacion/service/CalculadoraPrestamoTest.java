@@ -5,8 +5,6 @@ import com.banco.evaluacion.model.EstadoPrestamo;
 import com.banco.evaluacion.model.Prestamo;
 import com.banco.evaluacion.model.TipoPrestamo;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.Parameter;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -31,7 +29,7 @@ public class CalculadoraPrestamoTest {
     }
 
     @ParameterizedTest
-    @DisplayName("Se solicito un monto negativo o invalido")
+    @DisplayName("Se solicito un prestamo con un monto negativo o invalido, la aplicacion debe lanzar una excepcion")
     @ValueSource(doubles = {-5000,-100, 0})
     void testMontoInvalido(double monto){
         CalculadoraPrestamo calculadora = new CalculadoraPrestamo();
