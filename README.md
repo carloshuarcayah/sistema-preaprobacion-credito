@@ -1,31 +1,44 @@
-# Sistema de pre-aprobacion de creditos
-Este proyecto es un sistema automatizado de evaluacion crediticio desarrollado en **Java 17**. Evalua solicitudes enviadas y basandonos en ciertas reglas valida si el credito es aprobado o rechazado.
-## Tecnologias:
-- Lenguaje: Java 17 (Uso de records y Switch Expresions).
-- Maven
-- Testing: JUnit 5.
-- Conexion: JDBC
-- DB: PostgreSQL
+# Sistema de Pre-aprobación de Créditos
 
-## Caracteristicas
-- Uso de BigDecimal para calculos precisos (pasamos de float a BigDecimal más que nada como reto personal).
-- Separacinode responsabilidades (Servicios, Repositorios, Modelos)
-- Posibilidad de guardar todos los prestamos solicitados en un archivo de texto plano (`historial_evaluaciones.txt`) para cualquier uso (no habilitado en este momento porque hacemos uso de una base de datos).
+Este proyecto es un sistema automatizado de evaluación crediticia desarrollado en **Java 17**. El motor evalúa solicitudes enviadas y, basándose en reglas de negocio estrictas, valida si el crédito es aprobado o rechazado, calculando además la cuota mensual precisa.
 
-## Funcionalidades
-- Evaluacion automatizada: Filtra por edad (18-70 años), score crediticio del cliente (mayor a 50 para ser candidato a prestamo), verifica deudas y que el prestamo sea mayor al minimo establecido. 
-- Calcular cuotas: Aplica intereses segun el tipo de prestamo que se desea sacar haciendo uso del ENUM TipoPrestamo.
-- Persistencia en archivos: Registro de las evaluaciones realizadas y si han sido aprobadas o rechazadas. (historial_evaluaciones.txt)
-- Reporte de datos: Muestra un resumen de ccuantos prestamos han sido solicitados y de esos cuantos han sido aprobados y rechazados.
+## Tecnologías
+- **Lenguaje:** Java 17 (Uso de Records, Switch Expressions).
+- **Gestión de dependencias:** Maven.
+- **Testing:** JUnit 5.
+- **Conexión:** JDBC.
+- **Base de Datos:** PostgreSQL.
 
-## Servicios
-1. Evaluacion Automatizada de prestamo (EvaluadorRiesgoService): Filtra a los candidatos siguiendo ciertas reglas.
-   - Edad: Cliente debe tener entre 18 y 70 años.
-   - Historial: El score crediticio tiene que ser mayor 50 puntos.
-   - Deuda: El cliente no debe poseer ninguna deuda activa.
-   - Cuotas: La cuota mensual no debe superar el 30% del sueldo neto del cliente.
-2. Calculo de las cuotas (CalculadoraPrestamo):
-   - Encontramos dos validaciones para asegurarnos que se ha entregado un monto mayor a 0 y que el no se haya entregado un null para evitar errores graves.
-   - Aplica una tasa de interes segun el tipo de prestamo solicitado (PERSONAL, HIPOTECARIO, VEHICULAR).
+## Características Técnicas
+- Implementación de `BigDecimal` en lugar de `float/double` para garantizar cálculos exactos y evitar errores financieros graves.
+- Separación de responsabilidades en capas (Servicios, Repositorios, Modelos).
+- Sistema de logs que registra todas las evaluaciones en el archivo plano (`historial_evaluaciones.txt`).
 
-## Como ejecutar
+## Lógica de los Servicios
+### 1. Evaluador de Riesgo (`EvaluadorRiesgoService`)
+Es el núcleo de la lógica de negocio. Aplica los siguientes filtros:
+- **Edad:** Cliente debe tener entre 18 y 70 años.
+- **Historial:** El score crediticio debe ser mayor a 50 puntos.
+- **Salud Financiera:** El cliente no debe poseer ninguna deuda activa.
+- **Capacidad de Pago:** La cuota mensual no debe superar el 30% del sueldo neto del cliente.
+
+### 2. Calculadora Financiera (`CalculadoraPrestamo`)
+- **Validaciones:** Se implementó validaciones para asegurar que los montos sean positivos y los objetos no sean nulos.
+- **Cálculo de Interés:** Aplica tasas específicas según el tipo de préstamo y devuelve valores para su uso en los calculos.
+
+## Cómo ejecutar el proyecto
+
+### 1. Prerrequisitos
+- Tener instalado Java 17+.
+- Tener instalado PostgreSQL.
+
+### 2. Base de Datos
+1. Crear una base de datos en PostgreSQL llamada `banco_prueba`.
+2. Ejecutar el script SQL ubicado en `src/main/resources/database/schema.sql`. Este script genera las tablas e inserta datos semilla para pruebas.
+
+### 3. Configuración
+1. Navega al archivo de configuración: `src/main/java/.../config/DataBaseConfig.java`.
+2. Actualiza las constantes `USER` y `PASS` con tus credenciales de PostgreSQL:
+   ```java
+   private static final String USER = "postgres"; // Tu usuario
+   private static final String PASS = "TU_CONTRASEÑA"; // Tu contraseña
