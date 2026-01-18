@@ -3,7 +3,9 @@ Este proyecto es un sistema de evaluacion crediticio desarrollado en **Java 21**
 ## Tecnologias:
 - Java 21 (Uso de records y Switch Expresions).
 - Maven
-- Testing: JUnit 5. 
+- Testing: JUnit 5.
+- JDBC
+- PostgreSQL
 
 ## Funcionalidades
 - Evaluacion automatizada: Filtra por edad (18-70 años), score crediticio del cliente (mayor a 50 para ser candidato a prestamo), verifica deudas y que el prestamo sea mayor al minimo establecido. 
