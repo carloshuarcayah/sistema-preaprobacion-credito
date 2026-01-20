@@ -102,7 +102,7 @@ public class EvaluadorRiesgoService {
         }
     }
     public void revisarPendientes() throws SQLException {
-            List<Prestamo> pendientes = prestamoRepository.obtenerPendientes().orElse(List.of());
+            List<Prestamo> pendientes = prestamoRepository.obtenerPendientes();
 
             if(pendientes.isEmpty()){
                 System.out.println("No hay prestamos que necesiten ser revisados.");
