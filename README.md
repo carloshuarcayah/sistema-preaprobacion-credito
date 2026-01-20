@@ -44,6 +44,6 @@ Es el núcleo de la lógica de negocio. Aplica los siguientes filtros:
    private static final String PASS = "TU_CONTRASEÑA"; // Tu contraseña
    
 ## Cambios a considerar
-- [ ] *Mejora de los tests:* Se reemplazarán los tests que usar switch por tests mas pequeños y que vean solo un caso especifico.
-- [ ] *Migracion:* En un futuro pienso pasar este codigo a Spring para que pueda ser probado.
-- [ ] *Mock:* Pasaremos a usar Mockito para realizar pruebas en un futuro.  
+- [ ] **Mejora de los tests:** Se reemplazarán los tests que usar switch por tests mas pequeños y que vean solo un caso especifico.
+- [ ] **Migracion:** En un futuro pienso pasar este codigo a Spring para que pueda ser probado.
+- [ ] **Mock:** Pasaremos a usar Mockito para realizar pruebas en un futuro.  
