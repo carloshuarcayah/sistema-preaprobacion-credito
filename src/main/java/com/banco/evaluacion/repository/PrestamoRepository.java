@@ -47,7 +47,7 @@ public class PrestamoRepository {
         }
     }
 
-    public Optional<List<Prestamo>> obtenerPendientes() throws SQLException {
+    public List<Prestamo> obtenerPendientes() throws SQLException {
         String sql = "select * from historial_prestamos where estado='PENDIENTE'";
         try(Connection conn = DataBaseConfig.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)){
             ResultSet rs = pstmt.executeQuery();
@@ -63,9 +63,7 @@ public class PrestamoRepository {
                                 EstadoPrestamo.valueOf(rs.getString("estado"))
                 ));
             }
-            if(!prestamos.isEmpty())
-            return Optional.of(prestamos);
-            else return Optional.empty();
+            return prestamos;
         }catch(SQLException e){
             throw new SQLException("No se pudo conectar con la tabla historial_prestamos:"+e.getMessage());
         }
