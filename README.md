@@ -3,14 +3,14 @@
 Este proyecto es un sistema automatizado de evaluación crediticia desarrollado en **Java 21**. El motor evalúa solicitudes enviadas y, basándose en reglas de negocio estrictas, valida si el crédito es aprobado o rechazado, calculando además la cuota mensual precisa.
 
 ## Tecnologías
-- **Lenguaje:** Java 21 (Uso de Records, Switch Expressions).
+- **Lenguaje:** Java 21.
 - **Gestión de dependencias:** Maven.
 - **Testing:** JUnit 5.
 - **Conexión:** JDBC.
 - **Base de Datos:** PostgreSQL.
 
 ## Características Técnicas
-- Implementación de `BigDecimal` en lugar de `float/double` para garantizar cálculos exactos y evitar errores financieros graves.
+- Implementación de `BigDecimal` en lugar de `float/double` para garantizar cálculos exactos y evitar errores en calculos que deben ser precisos.
 - Separación de responsabilidades en capas (Servicios, Repositorios, Modelos).
 - Sistema de logs que registra todas las evaluaciones en el archivo plano (`historial_evaluaciones.txt`).
 
@@ -29,8 +29,8 @@ Es el núcleo de la lógica de negocio. Aplica los siguientes filtros:
 ## Cómo ejecutar el proyecto
 
 ### 1. Prerrequisitos
-- Tener instalado Java 17+.
-- Tener instalado PostgreSQL.
+- Tener instalado Java JDK 21.
+- Tener instalado PostgreSQL 16+.
 
 ### 2. Base de Datos
 1. Crear una base de datos en PostgreSQL llamada `banco_prueba`.
